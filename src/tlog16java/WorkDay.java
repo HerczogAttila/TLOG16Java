@@ -7,6 +7,7 @@ package tlog16java;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +47,15 @@ public class WorkDay {
         return requiredMinPerDay - getSumPerDay();
     }
     public boolean isSeparatedTime(Task task) {
-        return tasks.stream().noneMatch((k) -> (k.getStartTime().compareTo(task.getStartTime()) < k.getEndTime().compareTo(task.getStartTime()) ||
-                k.getStartTime().compareTo(task.getEndTime()) < k.getEndTime().compareTo(task.getEndTime()))
-        );
+        if(task.getStartTime() != null &&
+                tasks.stream().anyMatch((k) -> !k.equals(task) && k.getStartTime().compareTo(task.getStartTime()) > k.getEndTime().compareTo(task.getStartTime())))
+            return false;
+        
+        if(task.getEndTime() != null &&
+                tasks.stream().anyMatch((k) -> !k.equals(task) && k.getStartTime().compareTo(task.getEndTime()) > k.getEndTime().compareTo(task.getEndTime())))
+            return false;
+        
+        return true;
     }
     public void addTask(Task task) throws Exception {
         if(!task.isMultipleQuarterHour())
@@ -71,6 +78,13 @@ public class WorkDay {
         }
 
         return minPerTask;
+    }
+    
+    public LocalTime lastTaskEndTime() throws Exception {
+        if(tasks.isEmpty())
+            throw new Exception("Tasks is empty!");
+        
+        return tasks.get(tasks.size() - 1).getEndTime();
     }
 
     public long getRequiredMinPerDay() {

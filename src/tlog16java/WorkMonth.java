@@ -23,11 +23,11 @@ public class WorkMonth {
     }
 
     public long getExtraMinPerMonth() {
-        return getRequiredMinPerMonth() - getSumPerMonth();
+        return getSumPerMonth() - getRequiredMinPerMonth();
     }
 
     public boolean isNewDate(WorkDay day) {
-        return !days.contains(day);
+        return days.stream().noneMatch((d) -> (d.getActualDay().getDayOfMonth() == day.getActualDay().getDayOfYear()));
     }
 
     public boolean isSameMonth(WorkDay day) {

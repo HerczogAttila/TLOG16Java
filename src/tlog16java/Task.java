@@ -20,6 +20,7 @@ public class Task {
     
     public Task(String taskId) {
         this.taskId = taskId;
+        comment = "";
     }
     public Task(String taskId, String comment, int startHour, int startMinute, int endHour, int endMinute) {
         this.taskId = taskId;
@@ -42,7 +43,14 @@ public class Task {
     }
     
     public boolean isValidTaskId() {
-        return taskId.matches("^\\d{4}|^LT-\\d{4}");
+        //return taskId.matches("^\\d{4}|^LT-\\d{4}");
+        return isValidRedmineTaskId() || isValidLTTaskId();
+    }
+    public boolean isValidRedmineTaskId() {
+        return taskId.matches("^\\d{4}");
+    }
+    public boolean isValidLTTaskId() {
+        return taskId.matches("^LT-\\d{4}");
     }
     
     public boolean isMultipleQuarterHour() {
@@ -50,9 +58,21 @@ public class Task {
     }
     
     public long getMinPerTask() {
+        if(startTime == null || endTime == null)
+            return 0;
+        
         return MINUTES.between(startTime, endTime);
     }
     
+    @Override
+    public String toString() {
+        return taskId + "\t" + startTime + "\t" + endTime + "\t" + comment;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     public void setComment(String comment) {
         this.comment = comment;
     }
