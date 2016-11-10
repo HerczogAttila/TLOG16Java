@@ -13,7 +13,7 @@ import java.util.List;
  * @author Attila
  */
 public class TimeLogger {
-    private List<WorkMonth> months;
+    private final List<WorkMonth> months;
     
     public TimeLogger() {
         months = new ArrayList<>();

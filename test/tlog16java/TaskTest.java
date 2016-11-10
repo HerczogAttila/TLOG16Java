@@ -7,18 +7,18 @@ package tlog16java;
 
 import java.time.LocalTime;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import timelogger.exceptions.EmptyTimeFieldException;
 import timelogger.exceptions.InvalidTaskIdException;
 import timelogger.exceptions.NoTaskIdException;
 import timelogger.exceptions.NotExpectedTimeOrderException;
 import static tlog16java.Task.stringToLocalTime;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
  * @author Attila
  */
-public class TestTask {
+public class TaskTest {
     
     @Test(expected = NotExpectedTimeOrderException.class)
     public void testTimeOrder2() {

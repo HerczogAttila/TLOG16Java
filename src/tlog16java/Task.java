@@ -22,7 +22,7 @@ public final class Task {
     private LocalTime endTime;
     private String comment;
     
-    public Task(String taskId) throws InvalidTaskIdException, NoTaskIdException {
+    public Task(String taskId) {
         this.taskId = taskId;
         comment = "";
         
@@ -32,12 +32,10 @@ public final class Task {
         if(!isValidTaskId())
             throw new InvalidTaskIdException(taskId);
     }
-    public Task(String taskId, String comment, int startHour, int startMinute, int endHour, int endMinute) throws NotExpectedTimeOrderException,
-            EmptyTimeFieldException, InvalidTaskIdException, NoTaskIdException {
+    public Task(String taskId, String comment, int startHour, int startMinute, int endHour, int endMinute) {
         this(taskId, comment, startHour + ":" + startMinute, endHour + ":" + endMinute);
     }
-    public Task(String taskId, String comment, String startTime, String endTime) throws NotExpectedTimeOrderException, EmptyTimeFieldException,
-            InvalidTaskIdException, NoTaskIdException {
+    public Task(String taskId, String comment, String startTime, String endTime) {
         this.taskId = taskId;
         this.comment = comment;
         
@@ -61,25 +59,25 @@ public final class Task {
         }
     }
     
-    public static LocalTime stringToLocalTime(String time) throws RuntimeException {
+    public static LocalTime stringToLocalTime(String time) {
         String[] parts = time.split(":");
         int h = Integer.parseInt(parts[0]);
         int m = Integer.parseInt(parts[1]);
         return LocalTime.of(h, m);
     }
     
-    public boolean isValidTaskId() throws NoTaskIdException {
+    public boolean isValidTaskId() {
         //return taskId.matches("^\\d{4}|^LT-\\d{4}");
         return isValidRedmineTaskId() || isValidLTTaskId();
     }
-    public boolean isValidRedmineTaskId() throws NoTaskIdException {
-        if(this.taskId.isEmpty())
+    public boolean isValidRedmineTaskId() {
+        if(taskId.isEmpty())
             throw new NoTaskIdException();
         
         return taskId.matches("^\\d{4}");
     }
-    public boolean isValidLTTaskId() throws NoTaskIdException {
-        if(this.taskId.isEmpty())
+    public boolean isValidLTTaskId() {
+        if(taskId.isEmpty())
             throw new NoTaskIdException();
         
         return taskId.matches("^LT-\\d{4}");
@@ -113,7 +111,7 @@ public final class Task {
         startTime = LocalTime.of(hour, min);
     }
 
-    public void setStartTime(String startTime) throws Exception {
+    public void setStartTime(String startTime) {
         this.startTime = stringToLocalTime(startTime);
     }
 
@@ -121,7 +119,7 @@ public final class Task {
         endTime = LocalTime.of(hour, min);
     }
 
-    public void setEndTime(String endTime) throws Exception {
+    public void setEndTime(String endTime) {
         this.endTime = stringToLocalTime(endTime);
     }
 

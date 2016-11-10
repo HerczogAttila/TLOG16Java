@@ -14,8 +14,8 @@ import java.util.List;
  * @author Attila
  */
 public class WorkMonth {
-    private List<WorkDay> days;
-    private YearMonth date;
+    private final List<WorkDay> days;
+    private final YearMonth date;
     
     public WorkMonth(int year, int month) {
         days = new ArrayList<>();
@@ -36,27 +36,17 @@ public class WorkMonth {
 
     public void addWorkDay(WorkDay day) { addWorkDay(day, false); }
     public void addWorkDay(WorkDay day, boolean isWeekendEnabled) {
-        if(isWeekendEnabled || day.isWeekday()) {
+        if(isWeekendEnabled || day.isWeekDay()) {
             if(isSameMonth(day) && isNewDate(day))
                 days.add(day);
         }
     }
 
     public long getSumPerMonth() {
-        long sumPerDay = 0;
-        for(WorkDay wd : days) {
-            sumPerDay += wd.getSumPerDay();
-        }
-
-        return sumPerDay;
+        return days.stream().mapToLong(s -> s.getSumPerDay()).sum();
     }
     public long getRequiredMinPerMonth() {
-        long requiredMinPerDay = 0;
-        for(WorkDay wd : days) {
-            requiredMinPerDay += wd.getRequiredMinPerDay();
-        }
-
-        return requiredMinPerDay;
+        return days.stream().mapToLong(s -> s.getRequiredMinPerDay()).sum();
     }
 
     public List<WorkDay> getDays() {

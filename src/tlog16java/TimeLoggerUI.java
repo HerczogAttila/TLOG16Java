@@ -96,7 +96,7 @@ public class TimeLoggerUI {
         return tLogger.getMonths().get(i);
     }
     
-    private WorkDay selectDay() throws Exception {
+    private WorkDay selectDay() {
         WorkMonth month = selectMonth();
         listDays(month);
         
@@ -108,7 +108,7 @@ public class TimeLoggerUI {
                 return day;
         }
         
-        throw new Exception("The day is not found!");
+        throw new RuntimeException("The day is not found!");
     }
     
     private void addMonth() {
