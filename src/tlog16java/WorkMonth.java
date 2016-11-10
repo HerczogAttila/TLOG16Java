@@ -8,6 +8,9 @@ package tlog16java;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import timelogger.exceptions.NotNewDateException;
+import timelogger.exceptions.NotTheSameMonthException;
+import timelogger.exceptions.WeekendNotEnabledException;
 
 /**
  *
@@ -27,7 +30,7 @@ public class WorkMonth {
     }
 
     public boolean isNewDate(WorkDay day) {
-        return days.stream().noneMatch((d) -> (d.getActualDay().getDayOfMonth() == day.getActualDay().getDayOfYear()));
+        return days.stream().noneMatch((d) -> (d.getActualDay().getDayOfMonth() == day.getActualDay().getDayOfMonth()));
     }
 
     public boolean isSameMonth(WorkDay day) {
@@ -36,10 +39,16 @@ public class WorkMonth {
 
     public void addWorkDay(WorkDay day) { addWorkDay(day, false); }
     public void addWorkDay(WorkDay day, boolean isWeekendEnabled) {
-        if(isWeekendEnabled || day.isWeekDay()) {
-            if(isSameMonth(day) && isNewDate(day))
-                days.add(day);
-        }
+        if(!isNewDate(day))
+            throw new NotNewDateException();
+        
+        if(!isSameMonth(day))
+            throw new NotTheSameMonthException();
+        
+        if(!isWeekendEnabled && !day.isWeekDay()) 
+            throw new WeekendNotEnabledException();
+        
+        days.add(day);
     }
 
     public long getSumPerMonth() {
