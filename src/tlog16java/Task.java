@@ -7,49 +7,81 @@ package tlog16java;
 
 import java.time.LocalTime;
 import static java.time.temporal.ChronoUnit.MINUTES;
+import timelogger.exceptions.EmptyTimeFieldException;
+import timelogger.exceptions.InvalidTaskIdException;
+import timelogger.exceptions.NoTaskIdException;
+import timelogger.exceptions.NotExpectedTimeOrderException;
 
 /**
  *
  * @author Attila
  */
-public class Task {
+public final class Task {
     private String taskId;
     private LocalTime startTime;
     private LocalTime endTime;
     private String comment;
     
-    public Task(String taskId) {
+    public Task(String taskId) throws InvalidTaskIdException, NoTaskIdException {
         this.taskId = taskId;
         comment = "";
+        
+        if(this.taskId.isEmpty())
+            throw new NoTaskIdException();
+
+        if(!isValidTaskId())
+            throw new InvalidTaskIdException(taskId);
     }
-    public Task(String taskId, String comment, int startHour, int startMinute, int endHour, int endMinute) {
+    public Task(String taskId, String comment, int startHour, int startMinute, int endHour, int endMinute) throws NotExpectedTimeOrderException,
+            EmptyTimeFieldException, InvalidTaskIdException, NoTaskIdException {
+        this(taskId, comment, startHour + ":" + startMinute, endHour + ":" + endMinute);
+    }
+    public Task(String taskId, String comment, String startTime, String endTime) throws NotExpectedTimeOrderException, EmptyTimeFieldException,
+            InvalidTaskIdException, NoTaskIdException {
         this.taskId = taskId;
         this.comment = comment;
-        startTime = LocalTime.of(startHour, startMinute);
-        endTime = LocalTime.of(endHour, endMinute);
-    }
-    public Task(String taskId, String comment, String startTime, String endTime) {
-        this.taskId = taskId;
-        this.comment = comment;
-        this.startTime = stringToLocalTime(startTime);
-        this.endTime = stringToLocalTime(endTime);
+        
+        if(this.taskId.isEmpty())
+            throw new NoTaskIdException();
+                
+        if(!isValidTaskId())
+            throw new InvalidTaskIdException(taskId);
+        
+        try {
+            this.startTime = stringToLocalTime(startTime);
+            this.endTime = stringToLocalTime(endTime);
+        } catch(Exception e) { System.out.println(e); }
+
+        if(this.startTime != null & this.endTime != null) {
+            if(this.startTime.compareTo(this.endTime) > 0) {
+                throw new NotExpectedTimeOrderException(this.startTime, this.endTime);
+            }
+        } else {
+            throw new EmptyTimeFieldException();
+        }
     }
     
-    public static LocalTime stringToLocalTime(String time) {
+    public static LocalTime stringToLocalTime(String time) throws RuntimeException {
         String[] parts = time.split(":");
         int h = Integer.parseInt(parts[0]);
         int m = Integer.parseInt(parts[1]);
         return LocalTime.of(h, m);
     }
     
-    public boolean isValidTaskId() {
+    public boolean isValidTaskId() throws NoTaskIdException {
         //return taskId.matches("^\\d{4}|^LT-\\d{4}");
         return isValidRedmineTaskId() || isValidLTTaskId();
     }
-    public boolean isValidRedmineTaskId() {
+    public boolean isValidRedmineTaskId() throws NoTaskIdException {
+        if(this.taskId.isEmpty())
+            throw new NoTaskIdException();
+        
         return taskId.matches("^\\d{4}");
     }
-    public boolean isValidLTTaskId() {
+    public boolean isValidLTTaskId() throws NoTaskIdException {
+        if(this.taskId.isEmpty())
+            throw new NoTaskIdException();
+        
         return taskId.matches("^LT-\\d{4}");
     }
     
@@ -81,7 +113,7 @@ public class Task {
         startTime = LocalTime.of(hour, min);
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(String startTime) throws Exception {
         this.startTime = stringToLocalTime(startTime);
     }
 
@@ -89,11 +121,14 @@ public class Task {
         endTime = LocalTime.of(hour, min);
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(String endTime) throws Exception {
         this.endTime = stringToLocalTime(endTime);
     }
 
-    public String getTaskId() {
+    public String getTaskId() throws NoTaskIdException {
+        if(this.taskId.isEmpty())
+            throw new NoTaskIdException();
+        
         return taskId;
     }
 

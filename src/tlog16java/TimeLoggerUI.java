@@ -19,7 +19,6 @@ public class TimeLoggerUI {
     public TimeLoggerUI() {
         in = new Scanner(System.in);
         tLogger = new TimeLogger();
-        test();
     }
     
     public void printMenu() {
@@ -54,31 +53,6 @@ public class TimeLoggerUI {
             }
             System.out.println();
         }
-    }
-    
-    private void test() {
-        WorkMonth wm = new WorkMonth(2016, 1);
-        WorkDay day = new WorkDay(450, 2016, 1, 1);
-        Task t = new Task("1287", "teszt", "8:00", "9:00");
-        Task t2 = new Task("1534");
-        t2.setStartTime("9:00");
-        
-        try {
-            day.addTask(t);
-            day.addTask(t2);
-        } catch(Exception e) { System.out.println(e); }
-        
-        wm.addWorkDay(day);
-        day = new WorkDay(450, 2016, 1, 2);
-        wm.addWorkDay(day, true);
-        
-        tLogger.addMonth(wm);
-        
-        wm = new WorkMonth(2016, 2);
-        tLogger.addMonth(wm);
-        
-        wm = new WorkMonth(2016, 3);
-        tLogger.addMonth(wm);
     }
     
     private void listMonths() {
