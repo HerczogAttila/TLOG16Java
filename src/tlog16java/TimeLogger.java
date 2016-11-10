@@ -7,6 +7,7 @@ package tlog16java;
 
 import java.util.ArrayList;
 import java.util.List;
+import timelogger.exceptions.NotNewMonthException;
 
 /**
  *
@@ -24,11 +25,14 @@ public class TimeLogger {
     }
 
     public boolean isNewMonth(WorkMonth month) {
-        return !months.contains(month);
+        return months.stream().noneMatch((d) -> (d.getDate().getMonthValue() == month.getDate().getMonthValue() &&
+                d.getDate().getYear() == month.getDate().getYear()));
     }
 
     public void addMonth(WorkMonth month) {
-        if(isNewMonth(month))
-            months.add(month);
+        if(!isNewMonth(month))
+            throw new NotNewMonthException();
+        
+        months.add(month);
     }
 }
