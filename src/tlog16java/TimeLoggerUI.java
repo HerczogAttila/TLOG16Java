@@ -16,11 +16,17 @@ public class TimeLoggerUI {
     private final TimeLogger tLogger;
     private final Scanner in;
     
+    /**
+     * Default Constructor.
+     */
     public TimeLoggerUI() {
         in = new Scanner(System.in);
         tLogger = new TimeLogger();
     }
     
+    /**
+     * Print the text-based user interface.
+     */
     public void printMenu() {
         int command = -1;
         
@@ -55,6 +61,9 @@ public class TimeLoggerUI {
         }
     }
     
+    /**
+     * List the months with their number.
+     */
     private void listMonths() {
         int c = 1;
         for(WorkMonth month : tLogger.getMonths()) {
@@ -63,30 +72,46 @@ public class TimeLoggerUI {
         }
     }
     
+    /**
+     * List the selected month days.
+     */
     private void listDays() {
         WorkMonth month = selectMonth();
         listDays(month);
     }
     
+    /**
+     * List month days.
+     * @param month 
+     */
     private void listDays(WorkMonth month) {
         month.getDays().stream().forEach((day) -> {
             System.out.println(day.getActualDay());
         });
     }
     
+    /**
+     * List the selected day tasks.
+     * @exception RuntimeException
+     */
     private void listTasks() {
-        try {
-            WorkDay day = selectDay();
-            listTasks(day);
-        } catch(Exception e) { System.out.println(e); }
+        WorkDay day = selectDay();
+        listTasks(day);
     }
     
+    /**
+     * List day tasks.
+     * @param day 
+     */
     private void listTasks(WorkDay day) {
         day.getTasks().stream().forEach((task) -> {
             System.out.println(task);
         });
     }
     
+    /**
+     * @return WorkMonth The selected month.
+     */
     private WorkMonth selectMonth() {
         listMonths();
         
@@ -96,6 +121,10 @@ public class TimeLoggerUI {
         return tLogger.getMonths().get(i);
     }
     
+    /**
+     * @return WorkDay The selected work day.
+     * @exception RuntimeException
+     */
     private WorkDay selectDay() {
         WorkMonth month = selectMonth();
         listDays(month);
@@ -111,6 +140,9 @@ public class TimeLoggerUI {
         throw new RuntimeException("The day is not found!");
     }
     
+    /**
+     * Create a new work month.
+     */
     private void addMonth() {
         System.out.println("Please enter the year!");
         int y = in.nextInt();
@@ -122,6 +154,9 @@ public class TimeLoggerUI {
         } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
+    /**
+     * Create a new work day.
+     */
     private void addDay() {
         WorkMonth month = selectMonth();
         int y = month.getDate().getYear();
@@ -142,6 +177,9 @@ public class TimeLoggerUI {
         } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
+    /**
+     * Create a new task.
+     */
     private void startTask() {
         try {
             WorkDay day = selectDay();
@@ -173,6 +211,9 @@ public class TimeLoggerUI {
         } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
+    /**
+     * Set the selected task end time.
+     */
     private void finishTask() {
         try {
             WorkDay day = selectDay();
@@ -197,6 +238,9 @@ public class TimeLoggerUI {
         } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
+    /**
+     * Delete the setelected task.
+     */
     private void deleteTask() {
         try {
             WorkDay day = selectDay();
@@ -220,6 +264,9 @@ public class TimeLoggerUI {
         } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
+    /**
+     * Modify the selected task.
+     */
     private void modifyTask() {
         try {
             WorkDay day = selectDay();
@@ -259,6 +306,9 @@ public class TimeLoggerUI {
         } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
+    /**
+     * Print the selected month statistics.
+     */
     private void statistics() {
         WorkMonth month = selectMonth();
         
