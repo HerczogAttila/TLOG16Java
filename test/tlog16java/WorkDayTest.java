@@ -184,4 +184,12 @@ public class WorkDayTest {
         wd.addTask(new Task("1234", "", "7:30", "8:45"));
         wd.addTask(new Task("1235", "", "8:30", "9:45"));
     }
+    
+    @Test
+    public void testIsntSeparatedTime4() {
+        WorkDay wd = new WorkDay();
+        wd.addTask(new Task("1234", "", "7:30", "8:45"));
+        Task t = new Task("1235", "", "7:45", "8:15");
+        assertEquals(wd.isSeparatedTime(t), false);
+    }
 }

@@ -57,4 +57,13 @@ public class TimeLoggerTest {
         
         assertEquals(tl.isNewMonth(month), false);
     }
+    
+    @Test
+    public void testIsNewMonth2() {
+        TimeLogger tl = new TimeLogger();
+        tl.addMonth(new WorkMonth(2016, 9));
+        WorkMonth month = new WorkMonth(2015, 9);
+        
+        assertEquals(tl.isNewMonth(month), true);
+    }
 }

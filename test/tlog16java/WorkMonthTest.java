@@ -202,4 +202,12 @@ public class WorkMonthTest {
         month.addWorkDay(new WorkDay(450, 2016, 9, 1));
         month.addWorkDay(new WorkDay(450, 2016, 8, 30));
     }
+    
+    @Test
+    public void testIsntSameMonth2() {
+        WorkMonth month = new WorkMonth(2016, 9);
+        month.addWorkDay(new WorkDay(450, 2016, 9, 1));
+        WorkDay day = new WorkDay(450, 2016, 8, 1);
+        assertEquals(month.isSameMonth(day), false);
+    }
 }

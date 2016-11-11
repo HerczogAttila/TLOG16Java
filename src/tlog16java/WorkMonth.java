@@ -34,7 +34,7 @@ public class WorkMonth {
     }
 
     public boolean isSameMonth(WorkDay day) {
-        return day.getActualDay().getMonthValue() == date.getMonthValue();
+        return day.getActualDay().getMonthValue() == date.getMonthValue() && day.getActualDay().getYear() == date.getYear();
     }
 
     public void addWorkDay(WorkDay day) { addWorkDay(day, false); }
