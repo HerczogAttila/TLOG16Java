@@ -117,7 +117,9 @@ public class TimeLoggerUI {
         System.out.println("Please enter the month!");
         int m = in.nextInt();
         
-        tLogger.addMonth(new WorkMonth(y, m));
+        try {
+            tLogger.addMonth(new WorkMonth(y, m));
+        } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
     private void addDay() {
@@ -134,10 +136,10 @@ public class TimeLoggerUI {
         String hour = in.nextLine();
         if(!hour.isEmpty())
             h = Float.valueOf(hour);
-        //float h = in.nextFloat();
         
-        WorkDay day = new WorkDay((int)(h * 60), y, m, d);
-        month.addWorkDay(day);
+        try {
+            month.addWorkDay(new WorkDay((int)(h * 60), y, m, d));
+        } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
     private void startTask() {
@@ -168,7 +170,7 @@ public class TimeLoggerUI {
             task.setStartTime(startTime);
 
             day.addTask(task);
-        } catch(Exception e) { System.out.println(e); }
+        } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
     private void finishTask() {
@@ -192,7 +194,7 @@ public class TimeLoggerUI {
             String endTime = in.next();
             
             task.setEndTime(endTime);            
-        } catch(Exception e) { System.out.println(e); }
+        } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
     private void deleteTask() {
@@ -215,7 +217,7 @@ public class TimeLoggerUI {
             if(confirm)
                 day.getTasks().remove(i);
             
-        } catch(Exception e) { System.out.println(e); }
+        } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
     private void modifyTask() {
@@ -254,7 +256,7 @@ public class TimeLoggerUI {
             if(!endTime.isEmpty())
                 task.setEndTime(endTime);
             
-        } catch(Exception e) { System.out.println(e); }
+        } catch(Exception e) { System.out.println(e.getMessage()); }
     }
     
     private void statistics() {
