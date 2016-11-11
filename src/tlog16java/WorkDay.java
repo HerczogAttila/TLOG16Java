@@ -19,6 +19,7 @@ import timelogger.exceptions.NotSeparatedTimesException;
  *
  * @author Attila
  */
+@lombok.Getter
 public class WorkDay {
     private List<Task> tasks;
     private long requiredMinPerDay;
@@ -94,14 +95,6 @@ public class WorkDay {
             throw new NegativeMinutesOfWorkException();
         
         return requiredMinPerDay;
-    }
-
-    public LocalDate getActualDay() {
-        return actualDay;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
     }
 
     public void setRequiredMinPerDay(long requiredMinPerDay) {

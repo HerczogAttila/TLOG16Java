@@ -16,6 +16,8 @@ import timelogger.exceptions.NotExpectedTimeOrderException;
  *
  * @author Attila
  */
+@lombok.Getter
+@lombok.Setter
 public final class Task {
     private String taskId;
     private LocalTime startTime;
@@ -99,14 +101,6 @@ public final class Task {
         return taskId + "\t" + startTime + "\t" + endTime + "\t" + comment;
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public void setStartTime(int hour, int min) {
         startTime = LocalTime.of(hour, min);
     }
@@ -128,17 +122,5 @@ public final class Task {
             throw new NoTaskIdException();
         
         return taskId;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public String getComment() {
-        return comment;
     }
 }

@@ -16,6 +16,7 @@ import timelogger.exceptions.WeekendNotEnabledException;
  *
  * @author Attila
  */
+@lombok.Getter
 public class WorkMonth {
     private final List<WorkDay> days;
     private final YearMonth date;
@@ -56,13 +57,5 @@ public class WorkMonth {
     }
     public long getRequiredMinPerMonth() {
         return days.stream().mapToLong(s -> s.getRequiredMinPerDay()).sum();
-    }
-
-    public List<WorkDay> getDays() {
-        return days;
-    }
-
-    public YearMonth getDate() {
-        return date;
     }
 }

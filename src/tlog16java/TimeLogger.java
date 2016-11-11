@@ -13,15 +13,12 @@ import timelogger.exceptions.NotNewMonthException;
  *
  * @author Attila
  */
+@lombok.Getter
 public class TimeLogger {
     private final List<WorkMonth> months;
     
     public TimeLogger() {
         months = new ArrayList<>();
-    }
-
-    public List<WorkMonth> getMonths() {
-        return months;
     }
 
     public boolean isNewMonth(WorkMonth month) {

@@ -9,15 +9,12 @@ package timelogger.exceptions;
  *
  * @author Attila
  */
+@lombok.Getter
 public class InvalidTaskIdException extends RuntimeException {
-    private String taskId;
+    private final String taskId;
     
     public InvalidTaskIdException(String taskId) {
         super("Invalid task id: " + taskId + "!");
         this.taskId = taskId;
-    }
-
-    public String getTaskId() {
-        return taskId;
     }
 }

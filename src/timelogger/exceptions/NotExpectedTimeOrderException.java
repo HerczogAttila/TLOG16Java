@@ -11,6 +11,7 @@ import java.time.LocalTime;
  *
  * @author Attila
  */
+@lombok.Getter
 public class NotExpectedTimeOrderException extends RuntimeException {
     private LocalTime start, end;
     
@@ -18,13 +19,5 @@ public class NotExpectedTimeOrderException extends RuntimeException {
         super("Not expected time order! start=" + start + ", end=" + end);
         this.start = start;
         this.end = end;
-    }
-
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public LocalTime getEnd() {
-        return end;
     }
 }

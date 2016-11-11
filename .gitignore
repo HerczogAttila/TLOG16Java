@@ -1,0 +1,9 @@
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build.xml
+manifest.mf
+lombok.jar
