@@ -5,6 +5,9 @@
  */
 package tlog16java;
 
+import timelogger.WorkDay;
+import timelogger.Task;
+import timelogger.WorkMonth;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import timelogger.exceptions.NotNewDateException;

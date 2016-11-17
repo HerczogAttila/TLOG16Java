@@ -5,6 +5,8 @@
  */
 package tlog16java;
 
+import timelogger.WorkDay;
+import timelogger.Task;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.junit.Test;

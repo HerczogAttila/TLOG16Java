@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tlog16java;
+package timelogger;
 
 import java.time.YearMonth;
 import java.util.ArrayList;

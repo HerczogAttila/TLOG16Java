@@ -5,13 +5,14 @@
  */
 package tlog16java;
 
+import timelogger.Task;
 import java.time.LocalTime;
 import org.junit.Test;
 import timelogger.exceptions.EmptyTimeFieldException;
 import timelogger.exceptions.InvalidTaskIdException;
 import timelogger.exceptions.NoTaskIdException;
 import timelogger.exceptions.NotExpectedTimeOrderException;
-import static tlog16java.Task.stringToLocalTime;
+import static timelogger.Task.stringToLocalTime;
 import static org.junit.Assert.assertEquals;
 
 /**
